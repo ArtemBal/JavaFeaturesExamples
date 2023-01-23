@@ -53,7 +53,6 @@ public class Sample {
                         u.getAge() + 5,
                         u.getNationality() + " bumpkin")
                 )
-                .collect(Collectors.toList())
                 .forEach(System.out::println);
     }
 
@@ -65,7 +64,6 @@ public class Sample {
 
         userList.stream()
                 .sorted(Comparator.comparing(User::getAge).reversed())
-                .collect(Collectors.toList())
                 .forEach(System.out::println);
     }
 
@@ -79,7 +77,6 @@ public class Sample {
                 .sorted(Comparator.comparing(User::getAge)
                         .thenComparing(Comparator.comparing(User::getFirstName).reversed())
                         .thenComparing(User::getLastName))
-                .collect(Collectors.toList())
                 .forEach(System.out::println);
     }
 
@@ -94,9 +91,7 @@ public class Sample {
                 .getAverage();
         System.out.println("Average age: " + averageAge);
         int firstNameLength = userList.stream()
-                .mapToInt((value) -> {
-                    return value.getFirstName().length();
-                })
+                .mapToInt((value) -> value.getFirstName().length())
                 .summaryStatistics()
                 .getMax();
         System.out.println("max first name length: " + firstNameLength);
