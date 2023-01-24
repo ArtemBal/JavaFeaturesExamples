@@ -28,6 +28,7 @@ public class Examples {
         examples.test3();
         examples.test4();
         examples.test5();
+        examples.test6();
     }
 
     private void test1() {
@@ -72,9 +73,11 @@ public class Examples {
                 .forEach(System.out::println);
     }
 
+    /**
+     * some intermediate operators tests
+     */
     private void test5() {
         System.out.println("Test 5");
-
         System.out.println("--Stream of streams--");
         Stream.of(2, 3, 0, 1, 3)
                 .map(x -> IntStream.range(0, x))
@@ -127,11 +130,28 @@ public class Examples {
         IntStream.iterate(0, n -> n < 20, n -> n + 1)
                 .mapToObj(n -> n + " ")
                 .forEach(System.out::print);
+        System.out.println();
     }
+
 
     private void test6() {
         System.out.println("Test 6");
+        int sum1 = Stream.of(1, 2, 3, 4, 5).reduce(10, Integer::sum);
+        System.out.println("Sum of stream elements + 10: " + sum1);
 
+        Optional<Integer> sum2 = Stream.of(1, 2, 3, 4, 5).reduce(Integer::sum);
+        System.out.println("Sum of stream elements: " + sum2.get());
+
+        int min = Stream.of(1, 2, 3, 4, 5).min(Integer::compare).get();
+        System.out.println("Min element is: " + min);
+
+        System.out.println("First element is: " + Stream.of(1, 2, 3, 4, 5).findFirst());
+
+        System.out.println("-------------");
+        Stream.of(1, 2, 3, 4, 9).forEach(System.out::print);
+        System.out.println("\nAll elements are < 3? " + Stream.of(1, 2, 3, 4, 9).allMatch(n -> n < 3));
+        System.out.println("Any element is > 4? " + Stream.of(1, 2, 3, 4, 9).anyMatch(n -> n > 4));
+        System.out.println("NoneMatch x >= 7 " + Stream.of(1, 2, 3, 4, 9).noneMatch(x -> x >= 7));
     }
 
 }
