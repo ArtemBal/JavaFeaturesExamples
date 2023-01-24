@@ -1,9 +1,8 @@
 package balan.artem.streams.JavaRush;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Examples {
@@ -28,6 +27,7 @@ public class Examples {
         examples.test2();
         examples.test3();
         examples.test4();
+        examples.test5();
     }
 
     private void test1() {
@@ -45,24 +45,93 @@ public class Examples {
                 .forEach(System.out::println);
     }
 
+    /**
+     * transform into one stream of strings
+     */
     private void test3() {
         System.out.println("Test 3");
         String[] array = {"Java", "Ruuuuussshhh"};
         Stream<String> streamOfArray = Arrays.stream(array);
-        streamOfArray.map(s->s.split(""))
+        streamOfArray.map(s -> s.split(""))
                 .flatMap(Arrays::stream).distinct()
                 .collect(Collectors.toList())
                 .forEach(System.out::println);
     }
 
+    /**
+     * transform into stream of streams of strings
+     */
     private void test4() {
         System.out.println("Test 4");
         String[] array = {"Java", "Ruuuuussshhh"};
         Stream<String> streamOfArray = Arrays.stream(array);
-        streamOfArray.map(s->s.split(""))
+        streamOfArray.map(s -> s.split(""))
                 .map(Arrays::stream).distinct()
+                //.flatMap(Stream::distinct)
                 .collect(Collectors.toList())
                 .forEach(System.out::println);
+    }
+
+    private void test5() {
+        System.out.println("Test 5");
+
+        System.out.println("--Stream of streams--");
+        Stream.of(2, 3, 0, 1, 3)
+                .map(x -> IntStream.range(0, x))
+                .forEach(System.out::print);
+
+        System.out.println("\n--Stream of int's--");
+        Stream.of(2, 3, 0, 1, 3)
+                .flatMapToInt(x -> IntStream.range(0, x))
+                .forEach(System.out::print);
+
+        System.out.println("\n--Limit 6 and skip 2--");
+        Stream.of(2, 3, 0, 1, 3)
+                .flatMapToInt(x -> IntStream.range(0, x))
+                .limit(6)
+                .skip(2)
+                .forEach(System.out::print);
+
+        System.out.println("\n--Skip 2 and limit 6--");
+        Stream.of(2, 3, 0, 1, 3)
+                .flatMapToInt(x -> IntStream.range(0, x))
+                .skip(2)
+                .limit(6)
+                .forEach(System.out::print);
+
+        System.out.println("\n--Sorted--");
+        Stream.of(2, 3, 0, 1, 3)
+                .flatMapToInt(x -> IntStream.range(0, x))
+                .sorted()
+                .forEach(System.out::print);
+
+        System.out.println("\n--Sorted reverse--");
+        Stream.of(2, 3, 0, 1, 3)
+                .flatMapToInt(x -> IntStream.range(0, x)).boxed()
+                .sorted(Collections.reverseOrder())
+                .forEach(System.out::print);
+
+        System.out.println("\n--Take while < 2--");
+        Stream.of(2, 3, 0, 1, 3)
+                .flatMapToInt(x -> IntStream.range(0, x))
+                .takeWhile(n -> n < 2)
+                .forEach(System.out::print);
+
+        System.out.println("\n--Drop while < 2--");
+        Stream.of(2, 3, 0, 1, 3)
+                .flatMapToInt(x -> IntStream.range(0, x))
+                .dropWhile(n -> n < 2)
+                .forEach(System.out::print);
+
+        System.out.println("\n--Iterate--");
+        IntStream.iterate(0, n -> n < 20, n -> n + 1)
+                .mapToObj(n -> n + " ")
+                .forEach(System.out::print);
+    }
+
+    private void test6() {
+        System.out.println("Test 6");
+
     }
 
 }
