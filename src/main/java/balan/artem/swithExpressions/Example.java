@@ -27,8 +27,17 @@ public class Example {
                 }
     }
 
+    private void test2(){
+        DayOfWeek day = LocalDate.now().getDayOfWeek();
+        System.out.println(switch (day) {
+            case SUNDAY, SATURDAY -> "Weekend";
+            case FRIDAY, THURSDAY, WEDNESDAY, TUESDAY, MONDAY -> "Weekday";
+        });
+    }
+
     public static void main(String[] args) {
         Example example = new Example();
         example.test1();
+        example.test2();
     }
 }
