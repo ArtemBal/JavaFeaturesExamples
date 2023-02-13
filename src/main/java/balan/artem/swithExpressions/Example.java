@@ -35,9 +35,20 @@ public class Example {
         });
     }
 
+    private String test3(Object o) {
+        return switch (o) {
+            case Integer i -> String.format("int %d", i);
+            case Long l    -> String.format("long %d", l);
+            case Double d  -> String.format("double %f", d);
+            case String s  -> String.format("String %s", s);
+            default        -> o.toString();
+        };
+    }
+
     public static void main(String[] args) {
         Example example = new Example();
         example.test1();
         example.test2();
+        System.out.println(example.test3(5d));
     }
 }
